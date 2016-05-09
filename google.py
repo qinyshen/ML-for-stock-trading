@@ -38,8 +38,7 @@ def get_google_finance_intraday(ticker, period=60, days=15):
     requests.adapters.DEFAULT_RETRIES = 3
     s = requests.session()
     s.keep_alive = False
-    # page = requests.get(uri, proxies={"http": "127.0.0.1:9743"})
-    page = requests.get(uri)
+    page = requests.get(uri, proxies={"http": "127.0.0.1:9743"})
     reader = csv.reader(page.content.splitlines())
     columns = ['Open', 'High', 'Low', 'Close', 'Volume']
     rows = []
