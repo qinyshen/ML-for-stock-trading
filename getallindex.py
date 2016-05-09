@@ -1,13 +1,12 @@
-import google
+from google import get_google_finance_intraday
+
 
 def get_all_index():
     index_list = open('NYSE.txt')
     print index_list
-    indexs = [inst.strip().split('\r') for inst in index_list.readlines()]
-    print indexs
-    for eachindex in indexs:
-        print eachindex
-        google.get_google_finance_intraday(eachindex)
+    indexes = [inst.strip().split('\r') for inst in index_list.readlines()]
+    for each_index in indexes:
+        get_google_finance_intraday(each_index)
 
 
 get_all_index()
