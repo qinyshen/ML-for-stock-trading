@@ -8,7 +8,9 @@ import datetime
 import re
 
 import pandas as pd
+from pandas import DataFrame
 import requests
+
 
 def get_google_finance_intraday(ticker, period=60, days=15):
     """
@@ -33,6 +35,10 @@ def get_google_finance_intraday(ticker, period=60, days=15):
           '?i={period}&p={days}d&f=d,o,h,l,c,v&df=cpct&q={ticker}'.format(ticker=ticker,
                                                                           period=period,
                                                                           days=days)
+    requests.adapters.DEFAULT_RETRIES = 3
+    s = requests.session()
+    s.keep_alive = False
+    # page = requests.get(uri, proxies={"http": "127.0.0.1:9743"})
     page = requests.get(uri)
     reader = csv.reader(page.content.splitlines())
     columns = ['Open', 'High', 'Low', 'Close', 'Volume']
@@ -47,17 +53,30 @@ def get_google_finance_intraday(ticker, period=60, days=15):
                 times.append(start+datetime.timedelta(seconds=period*int(row[0])))
             rows.append(map(float, row[1:]))
 
-
-    if len(rows): 
-        PD = pd.DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'),
-                            columns=columns)
-
-
-        print PD
+    if len(rows):
+        PD = DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'), columns=columns)
+        deal_data(PD, times, ticker)
         # return pd.DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'),
         #                     columns=columns)
     else:
-        return pd.DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'))
+        return DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'))
+
+
+def deal_data(PD, times, ticker):
+    stock_data = []
+    for date in times:
+        each_data = []
+        each_data.extend([date.strftime("%Y-%m-%d %H:%M:%S") + ' ' + PD['Open'][date].__str__() + ' ' + PD['High'][
+            date].__str__() + PD['Low'][date].__str__() + ' ' + PD['Close'][date].__str__() + ' ' + PD['Volume'][
+                              date].__str__() + '\n'])
+        stock_data.extend(each_data)
+    store_stock_data(stock_data, ticker + '.txt')
+
+
+def store_stock_data(data_set, filename):
+    fw = open(filename, 'w')
+    fw.writelines(data_set)
+    fw.close()
 
 
 get_google_finance_intraday("AAPL")
