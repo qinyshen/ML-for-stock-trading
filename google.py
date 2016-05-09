@@ -69,7 +69,7 @@ def deal_data(PD, times, ticker):
             date].__str__() + PD['Low'][date].__str__() + ' ' + PD['Close'][date].__str__() + ' ' + PD['Volume'][
                               date].__str__() + '\n'])
         stock_data.extend(each_data)
-    store_stock_data(stock_data, ticker + '.txt')
+    store_stock_data(stock_data, 'DATA/' + ticker + '.txt')
 
 
 def store_stock_data(data_set, filename):
