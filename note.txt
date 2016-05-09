@@ -1,0 +1,2 @@
+注意：
+1.google finance 只能提供最近15天的data
