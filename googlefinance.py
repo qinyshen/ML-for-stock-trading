@@ -57,9 +57,10 @@ def get_google_finance_intraday(ticker, period=60, days=15):
         deal_data(PD, times, ticker)
         # return pd.DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'),
         #                     columns=columns)
+        return 'get'
     else:
-        return DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'))
-
+        #return DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'))
+        return 'loss'
 
 def deal_data(PD, times, ticker):
     stock_data = []
@@ -69,7 +70,7 @@ def deal_data(PD, times, ticker):
             date].__str__() + ' ' + PD['Low'][date].__str__() + ' ' + PD['Close'][date].__str__() + ' ' + PD['Volume'][
                               date].__str__() + '\n'])
         stock_data.extend(each_data)
-    store_stock_data(stock_data, 'DATA/' + ticker + '.txt')
+    store_stock_data(stock_data, 'DATA1/' + ticker + '.txt')
 
 
 def store_stock_data(data_set, filename):
