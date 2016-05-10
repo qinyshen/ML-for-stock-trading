@@ -6,6 +6,7 @@ import os
 def get_all_index():
     index_list1 = csv.reader(file('data/NASDAQ.csv', 'rb'))
     index_list2 = csv.reader(file('data/NYSE.csv', 'rb'))
+
     table1 = [line for line in index_list1]
     table2 = [line for line in index_list2]
     rows1 = len(table1)
@@ -20,5 +21,5 @@ def get_all_index():
     for each_index in indexes:
         google.get_google_finance_intraday(each_index)
 
-
 get_all_index()
+
