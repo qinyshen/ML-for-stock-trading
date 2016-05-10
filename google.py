@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 """
 Retrieve intraday stock data from Google Finance.
 """
@@ -38,7 +38,7 @@ def get_google_finance_intraday(ticker, period=60, days=15):
     requests.adapters.DEFAULT_RETRIES = 3
     s = requests.session()
     s.keep_alive = False
-    # page = requests.get(uri, proxies={"http": "127.0.0.1:9743"})
+    #page = requests.get(uri, proxies={"http": "127.0.0.1:9743"})
     page = requests.get(uri)
     reader = csv.reader(page.content.splitlines())
     columns = ['Open', 'High', 'Low', 'Close', 'Volume']
@@ -67,10 +67,10 @@ def deal_data(PD, times, ticker):
     for date in times:
         each_data = []
         each_data.extend([date.strftime("%Y-%m-%d %H:%M:%S") + ' ' + PD['Open'][date].__str__() + ' ' + PD['High'][
-            date].__str__() + PD['Low'][date].__str__() + ' ' + PD['Close'][date].__str__() + ' ' + PD['Volume'][
+            date].__str__() + ' ' + PD['Low'][date].__str__() + ' ' + PD['Close'][date].__str__() + ' ' + PD['Volume'][
                               date].__str__() + '\n'])
         stock_data.extend(each_data)
-    store_stock_data(stock_data, ticker + '.txt')
+    store_stock_data(stock_data, 'DATA/' + ticker + '.txt')
 
 
 def store_stock_data(data_set, filename):
@@ -79,4 +79,4 @@ def store_stock_data(data_set, filename):
     fw.close()
 
 
-get_google_finance_intraday("AAPL")
+#get_google_finance_intraday("AAPL")
