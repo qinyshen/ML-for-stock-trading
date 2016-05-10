@@ -78,4 +78,4 @@ def store_stock_data(data_set, filename):
     fw.close()
 
 
-get_google_finance_intraday("AAPL")
+#get_google_finance_intraday("AAPL")
