@@ -66,7 +66,7 @@ def deal_data(PD, times, ticker):
     for date in times:
         each_data = []
         each_data.extend([date.strftime("%Y-%m-%d %H:%M:%S") + ' ' + PD['Open'][date].__str__() + ' ' + PD['High'][
-            date].__str__() + PD['Low'][date].__str__() + ' ' + PD['Close'][date].__str__() + ' ' + PD['Volume'][
+            date].__str__() + ' ' + PD['Low'][date].__str__() + ' ' + PD['Close'][date].__str__() + ' ' + PD['Volume'][
                               date].__str__() + '\n'])
         stock_data.extend(each_data)
     store_stock_data(stock_data, 'DATA/' + ticker + '.txt')
