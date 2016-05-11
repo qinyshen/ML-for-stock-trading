@@ -11,13 +11,13 @@ def get_all_index():
     rows1 = len(table1)
     rows2 = len(table2)
     indexes = [0] * (rows1 + rows2 - 2)
-    num = 0
+    num = 1893
     for i in range(rows1 - 1):
         indexes[i] = table1[i + 1][0]
     for i in range(rows2 - 1):
         indexes[i + rows1 - 1] = table2[i + 1][0]
-    if not os.path.exists('DATA1'):
-        os.makedirs('DATA1')
+    if not os.path.exists('DATA'):
+        os.makedirs('DATA')
     for each_index in indexes[num: len(indexes)]:
         sign = get_google_finance_intraday(each_index)
         num += 1
