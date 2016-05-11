@@ -1,2 +1,5 @@
 注意：
 1.google finance 只能提供最近15天的data
+2.数据库:mydb 用户名:root 密码:root
+3.命令:mysql -u root mydb -p
+4.用 pymysql：pip install PyMySQL
