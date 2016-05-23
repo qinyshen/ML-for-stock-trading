@@ -11,7 +11,7 @@ def get_all_index():
     rows1 = len(table1)
     rows2 = len(table2)
     indexes = [0] * (rows1 + rows2 - 2)
-    num = 1893
+    num = 0
     for i in range(rows1 - 1):
         indexes[i] = table1[i + 1][0]
     for i in range(rows2 - 1):

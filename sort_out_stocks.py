@@ -5,30 +5,24 @@ import os
 import glob
 from collections import defaultdict
 import pymysql.cursors
+import csv
+
 # Connect to the database
 connection = pymysql.connect(user='root', password='root',
-                             database='learnMySQL')
+                             database='mydb')
 cursor = connection.cursor()
-name = ['x','xx']
-number = ['11', '12']
-for i in range(2):
-    sql = "INSERT INTO `room` (`name`,`number`) VALUES (%s, %s)"
-    cursor.execute(sql, (name[i], number[i]))
-    connection.commit()
+cursor.execute("select distinct symbol from Ticket")
+indexes = cursor.fetchall()
+indexlist = []
+for each_index in indexes[0:1]:
+    print each_index
+    cursor = connection.cursor()
+    cursor.execute("select max(open) from Ticket where symbol = %s",each_index)
+    max = cursor.fetchall()[0]
+    cursor.execute("select min(open) from Ticket where symbol = %s", each_index)
+    min = cursor.fetchall()[0]
+    cursor.execute("select AVG(volume) from Ticket where symbol = %s", each_index)
+    ADV = cursor.fetchall()[0]
+    print str(max) + ' ' + str(min) + ' ' + str(ADV)
 
-cursor = connection.cursor()
-cursor.execute("select * from room")
-results = cursor.fetchall()
-print results
-name =[]
-number = []
-for data in results:
-    name.append(data[0])
-    number.append(data[1])
-name = tuple(name)
-number =tuple(number)
-print name
-print number
-commit = "DELETE FROM room WHERE name in ('x','xx') and number LIMIT 1;"
-cursor.execute(commit)
-connection.commit()
+
