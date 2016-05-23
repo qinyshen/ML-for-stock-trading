@@ -17,8 +17,8 @@ count = 0
 for data in results:
     with connection.cursor() as cursor:
         count += 1
-        print 'delete '+str(count)+' : '+str(data[3]-1)
-        commit = "DELETE FROM Ticket WHERE symbol=%s and date=%s and time=%s LIMIT 1;"
-        cursor.execute(commit, (data[0], data[1], data[2]))
+        print 'delete '+str(count)+' time : ' + str(data[3]-1) + 'row(s)'
+        commit = "DELETE FROM Ticket WHERE symbol=%s and date=%s and time=%s LIMIT %s;"
+        cursor.execute(commit, (data[0], data[1], data[2], data[3]-1))
     connection.commit()
 
