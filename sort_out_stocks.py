@@ -7,22 +7,32 @@ from collections import defaultdict
 import pymysql.cursors
 import csv
 
-# Connect to the database
+
+def store_index_list(input_set, file_name):
+    fw = open(file_name, 'w')
+    fw.writelines(input_set)
+    fw.close()
+
 connection = pymysql.connect(user='root', password='root',
                              database='mydb')
 cursor = connection.cursor()
 cursor.execute("select distinct symbol from Ticket")
 indexes = cursor.fetchall()
-indexlist = []
-for each_index in indexes[0:1]:
-    print each_index
+index_list = []
+for each_index in indexes:
+    print each_index[0]
     cursor = connection.cursor()
-    cursor.execute("select max(open) from Ticket where symbol = %s",each_index)
-    max = cursor.fetchall()[0]
-    cursor.execute("select min(open) from Ticket where symbol = %s", each_index)
-    min = cursor.fetchall()[0]
-    cursor.execute("select AVG(volume) from Ticket where symbol = %s", each_index)
-    ADV = cursor.fetchall()[0]
-    print str(max) + ' ' + str(min) + ' ' + str(ADV)
+    cursor.execute("select max(open) from Ticket where symbol = %s",each_index[0])
+    max = cursor.fetchall()[0][0]
+    cursor.execute("select min(open) from Ticket where symbol = %s", each_index[0])
+    min = cursor.fetchall()[0][0]
+    cursor.execute("select AVG(volume) from Ticket where symbol = %s", each_index[0])
+    AMV = cursor.fetchall()[0][0]
+    sql = "INSERT INTO `Prepared` (`symbol`, `max`, `min`, `AMV`) VALUES (%s, %s, %s, %s)"
+    cursor.execute(sql, (each_index[0], max, min, AMV))
+    connection.commit()
+    index_list.extend([each_index[0] + ' ' + str(max) + ' ' + str(min) + ' ' + str(AMV)])
+print index_list
+store_index_list(index_list,'index_list.txt')
 
 
