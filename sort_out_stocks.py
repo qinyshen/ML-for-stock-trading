@@ -10,7 +10,7 @@ connection = pymysql.connect(user='root', password='root',
                              database='learnMySQL')
 
 cursor = connection.cursor()
-cursor.execute("select * from table1")
+cursor.execute("select * from room")
 results = cursor.fetchall()
 for re in results:
     print re
