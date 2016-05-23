@@ -18,7 +18,7 @@ connection = pymysql.connect(user='root', password='root',
 
 
 cursor = connection.cursor()
-cursor.execute("create table Prepared(symbol varchar(20) NOT NULL, max DOUBLE, min DOUBLE, AMV DOUBLE, PRIMARY KEY(symbol));")
+cursor.execute("create table IF NOT EXISTS Prepared(symbol varchar(20) NOT NULL, max DOUBLE, min DOUBLE, AMV DOUBLE, PRIMARY KEY(symbol));")
 connection.commit()
 
 cursor.execute("SHOW TABLES")
