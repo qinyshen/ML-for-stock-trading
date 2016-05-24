@@ -28,7 +28,6 @@ index_list = []
 for each_index in indexes:
     if each_index[0] == 'Prepared':
         continue
-    print each_index[0]
     commit = "select count(*) from Prepared where symbol = %s"
     cursor.execute(commit,each_index[0])
     count = cursor.fetchall()[0][0]
@@ -44,6 +43,4 @@ for each_index in indexes:
         cursor.execute(sql, (each_index[0], max, min, AMV))
         connection.commit()
     index_list.extend([each_index[0] + ' ' + str(max) + ' ' + str(min) + ' ' + str(AMV) + '\n'])
-
-print index_list
 store_index_list(index_list,'index_list.txt')

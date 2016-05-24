@@ -20,7 +20,6 @@ for filename in glob.glob(os.path.join(path, '*.txt')):
         symbol = tmp.split(".")[0]
         cursor = connection.cursor()
         commit = "CREATE TABLE IF NOT EXISTS $%s (date DATE,time TIME, Open DOUBLE,High DOUBLE,Low DOUBLE,Close DOUBLE,Volume int);" % symbol
-        print commit
         cursor.execute(commit)
         connection.commit()
         # print symbol
