@@ -42,4 +42,4 @@ for each_index in indexes:
         cursor.execute(sql, (each_index[0].split('$')[1], max, min, AMV))
         connection.commit()
     index_list.extend([each_index[0].split('$')[1] + ' ' + str(max) + ' ' + str(min) + ' ' + str(AMV) + '\n'])
-store_index_list(index_list,'index_list.txt')
+store_index_list(index_list, 'index_list.txt')
