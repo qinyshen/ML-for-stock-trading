@@ -31,7 +31,6 @@ for each_index in indexes:
     commit = "select count(*) from Prepared where symbol = %s"
     cursor.execute(commit,each_index[0])
     count = cursor.fetchall()[0][0]
-    print count
     cursor.execute("select max(open) from %s" % each_index[0])
     max = cursor.fetchall()[0][0]
     cursor.execute("select min(open) from %s" % each_index[0])
@@ -40,7 +39,7 @@ for each_index in indexes:
     AMV = cursor.fetchall()[0][0]
     if count == 0:
         sql = "INSERT INTO `Prepared` (`symbol`, `max`, `min`, `AMV`) VALUES (%s, %s, %s, %s)"
-        cursor.execute(sql, (each_index[0], max, min, AMV))
+        cursor.execute(sql, (each_index[0].split('$')[1], max, min, AMV))
         connection.commit()
-    index_list.extend([each_index[0] + ' ' + str(max) + ' ' + str(min) + ' ' + str(AMV) + '\n'])
+    index_list.extend([each_index[0].split('$')[1] + ' ' + str(max) + ' ' + str(min) + ' ' + str(AMV) + '\n'])
 store_index_list(index_list,'index_list.txt')
