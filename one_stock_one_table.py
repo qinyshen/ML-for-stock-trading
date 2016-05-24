@@ -19,12 +19,12 @@ for filename in glob.glob(os.path.join(path, '*.txt')):
         tmp = filename.split("/")[1]
         symbol = tmp.split(".")[0]
         cursor = connection.cursor()
-        commit = "CREATE TABLE IF NOT EXISTS %s (date DATE,time TIME, Open DOUBLE,High DOUBLE,Low DOUBLE,Close DOUBLE,Volume int);" % symbol
+        commit = "CREATE TABLE IF NOT EXISTS $%s (date DATE,time TIME, Open DOUBLE,High DOUBLE,Low DOUBLE,Close DOUBLE,Volume int);" % symbol
         print commit
         cursor.execute(commit)
         connection.commit()
         # print symbol
-        commit = "select count(*) from %s;" % symbol
+        commit = "select count(*) from $%s;" % symbol
         cursor.execute(commit)
         count = cursor.fetchall()[0][0]
         if count == 0:
@@ -42,7 +42,7 @@ for filename in glob.glob(os.path.join(path, '*.txt')):
 
                 with connection.cursor() as cursor:
                     # Create a new record
-                    sql = "INSERT INTO %s " % symbol
+                    sql = "INSERT INTO $%s " % symbol
                     sql = sql + "(date, time, Open, High, Low, Close, Volume) VALUES (%s, %s, %s, %s, %s, %s, %s)"
                     cursor.execute(sql, (date, time, Open, High, Low, Close, Volume))
 
