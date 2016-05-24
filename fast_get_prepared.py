@@ -26,20 +26,24 @@ indexes = cursor.fetchall()
 index_list = []
 
 for each_index in indexes:
-    if each_index == 'Prepared':
+    if each_index[0] == 'Prepared':
         continue
     print each_index[0]
-    cursor = connection.cursor()
+    commit = "select count(*) from Prepared where symbol = %s"
+    cursor.execute(commit,each_index[0])
+    count = cursor.fetchall()[0][0]
+    print count
     cursor.execute("select max(open) from %s" % each_index[0])
     max = cursor.fetchall()[0][0]
-    cursor.execute("select max(open) from %s" % each_index[0])
+    cursor.execute("select min(open) from %s" % each_index[0])
     min = cursor.fetchall()[0][0]
-    cursor.execute("select max(open) from %s" % each_index[0])
+    cursor.execute("select AVG(volume) from %s" % each_index[0])
     AMV = cursor.fetchall()[0][0]
-    sql = "INSERT INTO `Prepared` (`symbol`, `max`, `min`, `AMV`) VALUES (%s, %s, %s, %s)"
-    cursor.execute(sql, (each_index[0], max, min, AMV))
-    connection.commit()
-    index_list.extend([each_index[0] + ' ' + str(max) + ' ' + str(min) + ' ' + str(AMV)])
+    if count == 0:
+        sql = "INSERT INTO `Prepared` (`symbol`, `max`, `min`, `AMV`) VALUES (%s, %s, %s, %s)"
+        cursor.execute(sql, (each_index[0], max, min, AMV))
+        connection.commit()
+    index_list.extend([each_index[0] + ' ' + str(max) + ' ' + str(min) + ' ' + str(AMV) + '\n'])
 
 print index_list
 store_index_list(index_list,'index_list.txt')
