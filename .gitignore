@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+.DS_Store
+.gitignore
+.idea/
+1.csv
+2.csv
+DATA/
+NYSE.txt
+sp500.txt
+/index_list.txt
+/aim_stock.txt
