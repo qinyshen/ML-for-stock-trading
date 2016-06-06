@@ -11,3 +11,4 @@ test
 .DS_Store
 .idea/
 /aim_stock.txt
+.gitignore
