@@ -13,12 +13,13 @@ def store_index_list(input_set, file_name):
     fw.writelines(input_set)
     fw.close()
 
+
 connection = pymysql.connect(user='root', password='root',
                              database='tickets')
 
-
 cursor = connection.cursor()
-cursor.execute("create table IF NOT EXISTS Prepared(symbol varchar(20) NOT NULL, max DOUBLE, min DOUBLE, AMV DOUBLE, PRIMARY KEY(symbol));")
+cursor.execute(
+    "create table IF NOT EXISTS Prepared(symbol varchar(20) NOT NULL, max DOUBLE, min DOUBLE, AMV DOUBLE, PRIMARY KEY(symbol));")
 connection.commit()
 
 cursor.execute("SHOW TABLES")
@@ -29,7 +30,7 @@ for each_index in indexes:
     if each_index[0] == 'Prepared':
         continue
     commit = "select count(*) from Prepared where symbol = %s"
-    cursor.execute(commit,each_index[0])
+    cursor.execute(commit, each_index[0])
     count = cursor.fetchall()[0][0]
     cursor.execute("select max(open) from %s" % each_index[0])
     max = cursor.fetchall()[0][0]

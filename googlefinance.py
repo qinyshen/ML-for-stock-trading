@@ -49,7 +49,7 @@ def get_google_finance_intraday(ticker, period=60, days=15):
                 start = datetime.datetime.fromtimestamp(int(row[0][1:]))
                 times.append(start)
             else:
-                times.append(start+datetime.timedelta(seconds=period*int(row[0])))
+                times.append(start + datetime.timedelta(seconds=period * int(row[0])))
             rows.append(map(float, row[1:]))
 
     if len(rows):
@@ -59,8 +59,9 @@ def get_google_finance_intraday(ticker, period=60, days=15):
         #                     columns=columns)
         return 'get'
     else:
-        #return DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'))
+        # return DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'))
         return 'loss'
+
 
 def deal_data(PD, times, ticker):
     stock_data = []
@@ -78,5 +79,3 @@ def store_stock_data(data_set, filename):
     fw.writelines(data_set)
     fw.close()
 
-
-#get_google_finance_intraday("AAPL")

@@ -42,7 +42,7 @@ for filename in glob.glob(os.path.join(path, '*.txt')):
                 with connection.cursor() as cursor:
                     # Create a new record
                     sql = "INSERT INTO $%s " % symbol
-                    sql = sql + "(date, time, Open, High, Low, Close, Volume) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                    sql += "(date, time, Open, High, Low, Close, Volume) VALUES (%s, %s, %s, %s, %s, %s, %s)"
                     cursor.execute(sql, (date, time, Open, High, Low, Close, Volume))
 
                 # connection is not autocommit by default. So you must commit to save
