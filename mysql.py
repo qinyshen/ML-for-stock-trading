@@ -12,7 +12,7 @@ connection = pymysql.connect(user='root', password='root',
 
 
 #open file and break
-path = "test/"
+path = "DATA/"
 for filename in glob.glob(os.path.join(path, '*.txt')):			
 	with open(filename, 'r') as sub_infile:
 		tmp = filename.split("/")[1]
