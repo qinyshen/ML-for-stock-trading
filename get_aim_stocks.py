@@ -29,7 +29,7 @@ for item in sp500:
     symbol = item.split(",")[0]
     symbols.append(symbol)
 
-last300 = symbols[-300:]    
+last300 = symbols[-300:]
 
 for stock in results[int(length * 0.34) : int(length * 0.67)]:
     if 30 >= stock[1] >= 10 and 30 >= stock[2] >= 10:
