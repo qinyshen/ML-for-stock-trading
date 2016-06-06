@@ -22,7 +22,7 @@ results = cursor.fetchall()
 length = len(results)
 aim_stock = []
 
-#here to get the membership in the last 300 of SP500 as aim_stock
+# here to get the membership in the last 300 of SP500 as aim_stock
 sp500 = open('sp500.txt', 'r')
 symbols = []
 for item in sp500:
