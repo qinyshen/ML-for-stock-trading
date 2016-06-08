@@ -12,7 +12,7 @@ from pandas import DataFrame
 import requests
 
 
-def get_google_finance_intraday(ticker, period=60, days=15):
+def get_google_finance_intraday(ticker, root, period=60, days=15):
     """
     Retrieve intraday stock data from Google Finance.
     Parameters
@@ -54,7 +54,7 @@ def get_google_finance_intraday(ticker, period=60, days=15):
 
     if len(rows):
         PD = DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'), columns=columns)
-        deal_data(PD, times, ticker)
+        deal_data(PD, times, ticker, root)
         # return pd.DataFrame(rows, index=pd.DatetimeIndex(times, name='Date'),
         #                     columns=columns)
         return 'get'
@@ -63,7 +63,7 @@ def get_google_finance_intraday(ticker, period=60, days=15):
         return 'loss'
 
 
-def deal_data(PD, times, ticker):
+def deal_data(PD, times, ticker, root):
     stock_data = []
     for date in times:
         each_data = []
@@ -71,7 +71,7 @@ def deal_data(PD, times, ticker):
             date].__str__() + ' ' + PD['Low'][date].__str__() + ' ' + PD['Close'][date].__str__() + ' ' + PD['Volume'][
                               date].__str__() + '\n'])
         stock_data.extend(each_data)
-    store_stock_data(stock_data, 'DATA/' + ticker + '.txt')
+    store_stock_data(stock_data, root + ticker + '.txt')
 
 
 def store_stock_data(data_set, filename):
