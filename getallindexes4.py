@@ -6,9 +6,21 @@ import time
 
 
 def get_indexes(indexes, root, finished_thread):
-    for each_index in indexes:
-        sign = get_google_finance_intraday(each_index, root)
-        print each_index + ' : ' + sign
+    process = '-1'
+    flag = 1
+    while not process == indexes[-1]:
+        for each_index in indexes:
+            if each_index == process:
+                flag = 1
+            if flag == 1:
+                try:
+                    sign = get_google_finance_intraday(each_index, root)
+                    print each_index + ' : ' + sign
+                    process = each_index
+                except:
+                    process = each_index
+                    flag = 0
+                    break
     finished_thread[0] += 1
 
 
@@ -19,8 +31,8 @@ def get_all_index():
     table2 = [line for line in index_list2]
     indexes1 = [init[0] for init in table1[1:]]
     indexes2 = [init[0] for init in table2[1:]]
-    m1 = len(indexes1)/2
-    m2 = len(indexes2)/2
+    m1 = len(indexes1) / 2
+    m2 = len(indexes2) / 2
     finished_thread = [0]
     root = 'DATA1/'
     if not os.path.exists(root):
