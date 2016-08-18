@@ -25,6 +25,9 @@ cursor.execute("SHOW TABLES")
 indexes = cursor.fetchall()
 index_list = []
 
+
+print indexes
+
 for each_index in indexes:
     if each_index[0] == 'Prepared':
         continue
