@@ -72,7 +72,7 @@ for index in index_list:
             miss += 1
         # trade
         if index_num1 > 0:
-            if Close * (1 - 0.0000184) > price:
+            if Close * (1 - 0.0000184) > price:  # 0.0000184 is trading tax
                 rest += index_num1 * Close * (1 - 0.0000184)
                 index_num1 = 0
         if index_num2 > 0:
