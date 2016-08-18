@@ -53,6 +53,7 @@ for index in index_list:
     results = cursor.fetchall()
     m = len(results)
     move = 0
+    price = 0
     error = 0
     for i in range(5, m - 1):
         # prediction
@@ -71,16 +72,18 @@ for index in index_list:
             miss += 1
         # trade
         if index_num1 > 0:
-            rest += index_num1 * Label
-            index_num1 = 0
+            if Close * (1 - 0.0000184) > price:
+                rest += index_num1 * Close * (1 - 0.0000184)
+                index_num1 = 0
         if index_num2 > 0:
-            rest -= index_num2 * Label
+            rest -= index_num2 * Close
             index_num2 = 0
         if h - Close > 0:
             if index_num1 == 0:
                 move = 1
                 index_num1 += int(rest * 1 / results[i + 1][2])
                 rest -= index_num1 * results[i + 1][2]
+                price = results[i + 1][2]
         '''
         elif h - Close < 0:
             if index_num2 == 0:
@@ -99,6 +102,7 @@ for index in index_list:
         '''
     print "************ %s ************" % index
     money1 += money
+    print money
     print float(error_count) / (m - 5)
     print float(error) / (m - 5)
     print float(miss) / (m - 5)
