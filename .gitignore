@@ -8,6 +8,5 @@ DATA/
 NYSE.txt
 sp500.txt
 /index_list.txt
-/aim_stock.txt
 /DATA1/
 /test_LR.py
