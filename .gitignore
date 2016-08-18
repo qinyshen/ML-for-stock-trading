@@ -12,3 +12,4 @@ test
 .idea/
 /aim_stock.txt
 .gitignore
+test_LR.py
