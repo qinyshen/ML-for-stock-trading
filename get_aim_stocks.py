@@ -22,21 +22,19 @@ results = cursor.fetchall()
 length = len(results)
 aim_stock = []
 
-#print results
-
 #here to get the membership in the last 300 of SP500 as aim_stock
+
 sp500 = open('sp500.txt', 'r')
 symbols = []
 for item in sp500:
     symbol = item.split(",")[0]
     symbols.append(symbol)
 
-last300 = symbols[-300:]    
-
-#print last300
+last300 = symbols[-300:]
 
 
 for stock in results[int(length * 0.34) : int(length * 0.67)]:
+
     if 30 >= stock[1] >= 10 and 30 >= stock[2] >= 10:
         #print stock[0]
         each_stock = []
