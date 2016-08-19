@@ -15,8 +15,9 @@ count = 0
 
 
 def store_weights(input, file_name):
+    import pickle
     fw = open(file_name, 'w')
-    fw.writelines(input)
+    pickle.dump(input, fw)
     fw.close()
 
 
@@ -37,12 +38,11 @@ for index in index_list:
             Label =results[i+1][5]
             dataSet = array([Open, High, Low, Close])
             # print Open, High, Low, Close, Volume
-            alpha = 4 / (1.0 + j + i ) / 10000000 + 0.000001
+            alpha = 4 / (1.0 + j + i) / 10000000 + 0.000001
             h = sum(dataSet * weights)
             error = Label - h
             # print error
             weights += alpha * error * dataSet
     count += 1
 
-weights = [ str(each) if each == weights[-1] else str(each) + ' ' for each in weights]
 store_weights(weights, 'weights.txt')
