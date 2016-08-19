@@ -27,15 +27,15 @@ for index in index_list:
     results = cursor.fetchall()
     m = len(results)
     for j in range(numIter):
-        list = range(m-1)[5:]
+        list = range(m - 1)[5:]
         random.shuffle(list)
         for i in list:
-            Open = results[i-5][2]
-            High = max([each[3] for each in results[i-5:i]])
-            Low = min([each[4] for each in results[i-5:i]])
+            Open = results[i - 5][2]
+            High = max([each[3] for each in results[i - 5:i]])
+            Low = min([each[4] for each in results[i - 5:i]])
             Close = results[i][5]
-            Volume = float(sum([each[6] for each in results[i-5:i]])) / 100
-            Label =results[i+1][5]
+            Volume = float(sum([each[6] for each in results[i - 5:i]])) / 100
+            Label = results[i + 1][5]
             dataSet = array([Open, High, Low, Close])
             # print Open, High, Low, Close, Volume
             alpha = 4 / (1.0 + j + i) / 10000000 + 0.000001
@@ -43,6 +43,7 @@ for index in index_list:
             error = Label - h
             # print error
             weights += alpha * error * dataSet
+    print "%s training finished" % index
     count += 1
 
 store_weights(weights, 'weights.txt')

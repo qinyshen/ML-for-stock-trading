@@ -9,6 +9,7 @@ NYSE.txt
 sp500.txt
 /index_list.txt
 /DATA1/
-/test_LR.py
 googlefinance.pyc
 /aim_stock1.txt
+/aim_stock2.txt
+/weights1.txt
