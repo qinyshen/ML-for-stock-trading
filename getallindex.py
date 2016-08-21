@@ -27,5 +27,11 @@ def get_all_index(break_pt=""):
         if start:
             google.get_google_finance_intraday(each_index)
 
-get_all_index("MTD")
+# get_all_index("MTD")
 
+
+index_list = csv.reader(file('aim_stock.txt', 'rb'))
+for line in index_list:
+    word = line[0].split(' ')[0]
+    print word
+    google.get_google_finance_intraday(word)

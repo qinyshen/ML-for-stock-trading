@@ -8,7 +8,7 @@ import pymysql.cursors
 
 # Connect to the database
 connection = pymysql.connect(user='root', password='root',
-                             database='tickets')
+                             database='mydb1')
 
 # open file and break
 path = "DATA/"

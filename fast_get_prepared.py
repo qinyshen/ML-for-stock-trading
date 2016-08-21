@@ -13,9 +13,8 @@ def store_index_list(input_set, file_name):
     fw.writelines(input_set)
     fw.close()
 
-
 connection = pymysql.connect(user='root', password='root',
-                             database='tickets')
+                             database='mydb1')
 
 cursor = connection.cursor()
 cursor.execute(
@@ -46,4 +45,4 @@ for each_index in indexes:
         cursor.execute(sql, (each_index[0].split('$')[1], max, min, AMV))
         connection.commit()
     index_list.extend([each_index[0].split('$')[1] + ' ' + str(max) + ' ' + str(min) + ' ' + str(AMV) + '\n'])
-store_index_list(index_list, 'index_list.txt')
+store_index_list(index_list, 'aim_stock.txt')
