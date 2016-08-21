@@ -246,14 +246,14 @@ def extract_feature_vectors(database_name):
 				dataSet = [Open, High, Low, Close, Volume]
 
 				feature_matrix.append(dataSet)
-				result_price.append(Open)
+				result_price.append(Label)
 
 		#last day dont have result
 		result_price = result_price[1:]
 		feature_matrix.pop()
 
 	for feature, result in zip(feature_matrix, result_price):
-		if (result * (1 - 0.0000184) - 0.005) > feature[3]:
+		if (result * (1 - 0.0000184) - 0.005*2) > feature[3]:
 			binary_result.append(1)
 		else:	
 			binary_result.append(-1)
