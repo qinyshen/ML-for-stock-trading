@@ -13,3 +13,7 @@ googlefinance.pyc
 /aim_stock1.txt
 /aim_stock2.txt
 /weights1.txt
+/clf.model_01.npy
+/clf.model
+/clf.model_03.npy
+/clf.model_02.npy

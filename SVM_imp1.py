@@ -216,13 +216,11 @@ def extract_feature_vectors(database_name):
     index_list = [index_info.strip().split(' ')[0] for index_info in fr.readlines()]
     cursor = connection.cursor()
 
-    feature_matrix = []
+    for index in index_list:
+        feature_matrix = []
+        result_price = []
+        binary_result = []
 
-    result_price = []
-
-    binary_result = []
-
-    for index in index_list[:1]:
         commit = "select * from $%s;" % index
         cursor.execute(commit)
         results = cursor.fetchall()
@@ -244,18 +242,33 @@ def extract_feature_vectors(database_name):
         result_price = result_price[1:]
         feature_matrix.pop()
 
-    for feature, result in zip(feature_matrix, result_price):
-        if (result * (1 - 0.0000184) - 0.01) > feature[3]:
-            binary_result.append(1)
-        else:
-            binary_result.append(-1)
+        for feature, result in zip(feature_matrix, result_price):
+            # if (result * (1 - 0.0000184) - 0.01) > feature[3]:
+            if (result - 0.01) > feature[3]:
+                binary_result.append(1)
+            else:
+                binary_result.append(-1)
 
-    return feature_matrix, np.array(binary_result)
+        result_price =np.array(binary_result)
+        total = len(result_price)
+        training_total = int(total * 3 / 4)
+
+        print "%s : %d / %d" % (index, total, training_total)
+
+        X = np.split(feature_matrix, [training_total, total])
+        y = np.split(result_price, [training_total, total])
+
+        # clf = SVC(kernel='poly', degree=2, C=0.01, coef0=10000)
+        clf = LinearSVC(penalty='l2', dual=False, C=0.0001)
+        clf.fit(X[0], y[0])
+
+        print performance_CI(clf, X[1], y[1], "accuracy")
+        joblib.dump(clf, '/model/%s/clf.model' % index)
 
 
 # feature_matrix, result_price =  extract_feature_vectors("tickets")
-feature_matrix, result_price = extract_feature_vectors("tickets")
-
+extract_feature_vectors("tickets")
+'''
 total = len(result_price)
 training_total = int(total * 3 / 4)
 
@@ -271,7 +284,7 @@ clf.fit(X[0], y[0])
 
 print performance_CI(clf, X[1], y[1], "accuracy")
 joblib.dump(clf, 'clf.model')
-
+'''
 
 # metric = ["accuracy", "f1-score", "auroc", "precision", "sensitivity", "specificity"]
 
