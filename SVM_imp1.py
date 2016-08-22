@@ -253,7 +253,7 @@ def extract_feature_vectors(database_name):
         total = len(result_price)
         training_total = int(total * 3 / 4)
 
-        print "%s : %d / %d" % (index, total, training_total)
+        print "%s : %d / %d" % (index, training_total, total)
 
         X = np.split(feature_matrix, [training_total, total])
         y = np.split(result_price, [training_total, total])
@@ -263,7 +263,9 @@ def extract_feature_vectors(database_name):
         clf.fit(X[0], y[0])
 
         print performance_CI(clf, X[1], y[1], "accuracy")
-        joblib.dump(clf, '/model/%s/clf.model' % index)
+        if not os.path.exists('model/' + index):
+            os.makedirs('model/' + index)
+        joblib.dump(clf, 'model/%s/clf.model' % index)
 
 
 # feature_matrix, result_price =  extract_feature_vectors("tickets")

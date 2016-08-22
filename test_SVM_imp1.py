@@ -32,11 +32,11 @@ def show_money(symbol, money):
     plt.show()
 
 
-clf = joblib.load('clf.model')
 money1 = 0
 num = 32
 
 for index in index_list[:num]:
+    clf = joblib.load('model/%s/clf.model' % index)
     error_count = 0
     hold = 0
     money = 1000.0
