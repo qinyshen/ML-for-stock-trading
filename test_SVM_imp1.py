@@ -66,7 +66,7 @@ for index in index_list[:num]:
         prediction = clf.predict(dataSet)
         # trade
         if index_num1 > 0:
-            if Close * (1 - 0.0000184) > (price + 0.01) or (i - time) >= 40:  # 0.0000184 is trading tax
+            if (Close * (1 - 0.0000184) > (price + 0.01)) or (i - time) >= 40:  # 0.0000184 is trading tax
                 rest += index_num1 * Close * (1 - 0.0000184) - index_num1 * 0.005
                 commission += index_num1 * 0.01
                 tax += index_num1 * Close * 0.0000184
@@ -75,13 +75,12 @@ for index in index_list[:num]:
                 hold += i - time
         if prediction * (Label - results[i + 1][2]) < 0:
             error_count += 1
-        if prediction > 0:
-            if index_num1 == 0 :
-                move = 1
-                index_num1 += int(rest * 1 / results[i + 1][2])
-                rest -= index_num1 * results[i + 1][2] + index_num1 * 0.005
-                price = results[i + 1][2]
-                time = i
+        if prediction > 0 and index_num1 == 0:
+            move = 1
+            index_num1 += int(rest * 1 / results[i + 1][2])
+            rest -= index_num1 * results[i + 1][2] + index_num1 * 0.005
+            price = results[i + 1][2]
+            time = i
 
         money = rest + index_num1 * results[i + 1][2]
         money_history.append(money)

@@ -226,7 +226,7 @@ def extract_feature_vectors(database_name):
         results = cursor.fetchall()
         m = len(results)
 
-        for i in range(5, m-1):
+        for i in range(5, m - 1):
             Open = results[i - 5][2]
             High = max([each[3] for each in results[i - 5:i]])
             Low = min([each[4] for each in results[i - 5:i]])
@@ -249,7 +249,7 @@ def extract_feature_vectors(database_name):
             else:
                 binary_result.append(-1)
 
-        result_price =np.array(binary_result)
+        result_price = np.array(binary_result)
         total = len(result_price)
         training_total = int(total * 3 / 4)
 
